@@ -19,6 +19,9 @@ if($_GET['b']==""&&$_GET['a']==""){
 if(file_exists('z28.php')){echo'<form action="z28.php" method="get" style="display:inline"><input type="submit" name="e" value="Digit Only"></form>';}
 if(file_exists('testy.php')){echo'<form action="testy.php" method="get" target="_blank" style="display:inline">
 <input type="submit" name="e" value="Community Database"></form>';}}
+else{if(file_get_contents("3.html")!=""){
+$file=db("3.html");foreach($file as $filter){$f=explode("|",str_replace("\n","",$filter));$find[]=$f[0];$change[]=substr($f[1],0,-1);}}}
+
 function roulette($obj){
 $obj = str_replace("/","\\/",$obj);
  $strs=explode("\\",$obj);
@@ -60,7 +63,7 @@ if($_POST['comment']!=""){$token=crc32($_REQUEST['t']);
  if($d==0){$d = 10;}
   $length=strlen(htmlspecialchars($_POST['comment']));$t='';
   if((($length/$d)>($config[0]?:10) && strpos($_POST['rpl'],"-")===false)||strlen($_POST['name'])>($config[1]?:300)){
-   echo ($length/$d).' '.$length;
+   echo($length/$d).' '.$length;
   file_put_contents("9u9dyi","|s".time(),FILE_APPEND);
   exit("<mark>! <a href='28.php?b=d'>Unknown error.</a></mark>");
 }}
@@ -102,16 +105,16 @@ $file=db("1id8sjl.txt");$count = count($file);
  else{$e=100+($_COOKIE['crc']%900);}
 if($_POST['del']=="n"){for($i=0;$i<$count-max(($_POST['lines']*2),2);$i++)
 {$prvt.=$file[$i];}file_put_contents("1id8sjl.txt",$prvt);}
-elseif($_POST['del']!="" && strpos($file[$_POST['del']],$e)!==false && $e!=""){$a=1;}
+elseif($_POST['del']!="" && strpos($file[$_POST['del']],$e.'-')!==false && $e!=""){$a=1;}
 elseif($_COOKIE['9u9dyi']!=""){$a=1;}
 if($a==1){for($i=0;$i<$count;$i++){if($_POST['del']!=$i && $_POST['del']!=$i-1){$prvt.=$file[$i];}}file_put_contents("1id8sjl.txt",$prvt);}}
 
 #Refresh List (intentionally using softer checks)
 if($_GET['b']=="b"&&$_COOKIE['o']!=""){
-$sec=max(intval($_COOKIE['refresh']),4)?:'4';
+$sec=min(intval($_COOKIE['refresh']),4)?:'4';
 $names=glob("*.visit");$arr=[];
 #https://stackoverflow.com/posts/3298787/revisions
-array_multisort(array_map('filemtime',$names),SORT_NUMERIC,SORT_DESC, $names);$e=0;$i=0;
+array_multisort(array_map('filemtime',$names),SORT_NUMERIC,SORT_DESC,$names);$e=0;$i=0;
 foreach($names as $name){
 if($i<11){
 $p=file_get_contents($name);
@@ -241,11 +244,14 @@ if(file_get_contents("".crc())==''){file_put_contents("".crc(),time());}
 elseif((time()-2)> file_get_contents("".crc())){file_put_contents("".crc(),time());}
 else{file_put_contents("".crc(),time());exit("<a href='28.php?b=d'><mark>Too fast</mark></a>");}
 
-if(file_get_contents("3.html")!=""){
-$file=db("3.html");foreach($file as $filter){$f=explode("|",str_replace("\n","",$filter));$find[]=$f[0];$change[]=substr($f[1],0,-1);}}
+#Prepare messages
 if(strpos($_POST['comment'],'/me ')!==0){$txt=process($_POST["name"],$find,$change)." - ".process($comment,$find,$change);}
 else{$txt=process($_POST["name"],$find,$change).str_replace('/me ',' ',process($comment,$find,$change));}}
 
+#Nick protect
+if(strpos($_POST['comment'],"/np ")===0){$cf=fopen("3.html","a") or die($m);$e=htmlspecialchars(str_replace("/np ","",$_POST['name']."|alkaline \n".$_POST['comment'].'|'.$_POST['name']." \n"));fwrite($cf, $e) or die("<a href='28.php?b=d'><mark>Can't write</mark></a>");fclose($cf);$z=4;
+$p=htmlspecialchars(str_replace("/np ","",$_POST['comment']));
+echo"<mark>Protection added for ".htmlspecialchars($_POST['name']).", use $p instead</mark>";$_POST['name']=$p;$_COOKIE['name']=$p;setcookie("name",htmlspecialchars_decode($p),time()+34000);}
 #Topic
 if(strpos($_POST['comment'],"/bm ")===0&&($config[5]==1||$_COOKIE['9u9dyi']!="")){
 $bm=str_replace("/bm ","",process($_POST['comment'],$find,$change));
@@ -303,8 +309,8 @@ elseif($_POST['rpl']!=""&&strpos($file[$line], $e)!==false && $e!=""){
 for($i=0;$i<count($file);$i++){if($line!=$i){$prvt.=$file[$i];}else{$prvt.=$write."\n";}}file_put_contents("1id8sjl.txt",$prvt);}
 else{$cf=fopen("1id8sjl.txt", "a+") or die($m);fwrite($cf, $write.$nl) or die("<mark>Can't write</mark>");fclose($cf);}}}
 
-if($_GET['b']!="d"){echo'<!DOCTYPE html><link rel="manifest" href="/manifest.json"/><html id="f"><title>'.$phrase.'</title>';}
-if($_REQUEST['lines']==""){$l=12;}else{$l=htmlspecialchars(min($_REQUEST['lines'],48));}
+if($_GET['b']!="d"){echo'<!DOCTYPE html><<html id="f"><title>'.$phrase.'</title>';}
+#if($_REQUEST['lines']==""){$l=12;}else{$l=htmlspecialchars(min($_REQUEST['lines'],48));}
 $e = microtime(true);
 $token=crc32($e."|314159");
 #Light theme: bg #ff9, txt #930
@@ -343,7 +349,7 @@ echo'.r{color:#fff}.g{width:15em;margin-right:8em;margin-left:0.5em;background:#
 if($_GET['b']=='d'){
 echo'<form action="" target="_self" method="post">Colour:
 <input type="color" name="col" value="'.$cfi.'" style="padding:0em">...
-<input name="name" size="15" value="'. (htmlspecialchars($_REQUEST["name"]) ?: htmlspecialchars($_COOKIE["name"]) ).'" placeholder="Nick" required><br>
+<input name="name" size="15" value="'.(htmlspecialchars($_POST["name"])?:htmlspecialchars($_COOKIE["name"])).'" placeholder="Nick" required><br>
 <input style="color:#fff;background: linear-gradient(to left,#252, #525);" name="comment"';
 #PM/M
 preg_match("/^\/pm ([0-9]{3}) ?/i",strtolower(htmlspecialchars($_POST['pm']?:$_POST['comment'])),$matches);
@@ -427,7 +433,7 @@ preg_match("/([0-9]{3})-/i",strtolower($a),$matches);
 $b.='&nbsp;<form action="28.php?b=d" target="d" method="post"><button class="v" name="pm" value="/pm '.$matches[1].' "><span style="font-size:0.4em">&nbsp;</span><b>PM</b><span style="font-size:0.4em">&nbsp;</span></button></form>';}
 echo$b;return str_replace(date(">m-"),">",str_replace(date(">m-jS "),">",$a));}
 
-$sec=max(intval($_COOKIE['refresh']),4)?:'4';
+$sec=min(intval($_COOKIE['refresh']),4)?:'4';
 echo'<!DOCTYPE html><html>';
 #Advanced notifications
 $b=($config[4]*2)?:80;#(intval($_REQUEST['m'])*2)?:24;#$b=abs(min($b,48));
@@ -452,7 +458,7 @@ if($_GET['t']!=$time&&$_GET['t']!=""&&$_COOKIE['audio']!="off"&&$_COOKIE['audio'
 echo'<pre style="word-wrap:break-word;line-height:1.7;margin-top:-0.1em"><a href="canary.txt" target="_blank">'.htmlspecialchars_decode($config[3]).'</a><br>';
 
 if($_COOKIE['9u9dyi']!=""){$v='*';}else{$v='';}
-if(isset($_COOKIE['name'])){file_put_contents(str_ireplace("Aera344","Aera23",str_ireplace("Aera23","alkaline",strtr($_COOKIE['name'],":?/\\*|<>  '","__________"))).'.visit','|<span style="color:'.htmlspecialchars($_COOKIE['col']).'">'.date("m-jS H:i:</\s\p\a\\n>s").$v,FILE_APPEND);}
+if(isset($_COOKIE['name'])){file_put_contents(str_ireplace($find,$change,strtr($_COOKIE['name'],":?/\\*|<>  '","__________")).'.visit','|<span style="color:'.htmlspecialchars($_COOKIE['col']).'">'.date("m-jS H:i:</\s\p\a\\n>s").$v,FILE_APPEND);}
 
 for($i=$time;$i>=max(0,$time-$b);$i-=2){
 #M/PM/CRC checks
