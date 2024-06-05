@@ -3,7 +3,6 @@ function db($file){if(file_exists($file)){return file($file);}return [''];}
 
 if($_POST['audio']!=""){setcookie("audio",$_POST['audio'],time()+34060);}
 if($_GET['a']=="a"){file_put_contents("crc.txt",crc().date(" jS H:i:s")."\n",8);}
-$_COOKIE['name']=trim($_COOKIE['name']);
 $hpu='unlock.txt';
 if($_COOKIE['name']==file_get_contents($hpu)&&$_COOKIE['name']!=""){file_put_contents("crc.txt",$_COOKIE['name'].date(".H:i:s.|"),8);exit('<meta http-equiv="refresh" content="4">');}
 if(file_get_contents($hpu)=='"'&&!isset($_COOKIE['9u9dyi'])){file_put_contents("crc.txt",$_COOKIE['name'].date(".H:i:s.|"),8);exit('<meta http-equiv="refresh" content="4">');}
@@ -11,7 +10,6 @@ $config=explode("|",file_get_contents("config.txt"));
 $phrase=$config[2]?:'Chat';
 $v='<meta name="viewport" content="width=device-width, initial-scale=1">';
 if($_POST['refresh']!=""){setcookie("refresh",$_POST['refresh'],time()+34000);}
-if($_POST['name']!=""){setcookie("name",$_REQUEST['name'],time()+34000);}
 if(strlen($_POST['col'])==7){setcookie('col',$_POST['col'],time()+34000);}
 
 if($_GET['9u9dyi']=="t"){setcookie("9u9dyi","t",time()+432000);echo'<mark>Moderator cookie set</mark><form action="28.php" style="display:inline"><input type="submit" name="a" value="Settings"></form>';}
@@ -19,8 +17,10 @@ if($_GET['b']==""&&$_GET['a']==""){
 if(file_exists('z28.php')){echo'<form action="z28.php" method="get" style="display:inline"><input type="submit" name="e" value="Digit Only"></form>';}
 if(file_exists('testy.php')){echo'<form action="testy.php" method="get" target="_blank" style="display:inline">
 <input type="submit" name="e" value="Community Database"></form>';}}
-else{if(file_get_contents("3.html")!=""){
-$file=db("3.html");foreach($file as $filter){$f=explode("|",str_replace("\n","",$filter));$find[]=$f[0];$change[]=substr($f[1],0,-1);}}}
+if(file_get_contents("3.html")!=""){
+$file=db("3.html");foreach($file as $filter){$f=explode("|",str_replace("\n","",$filter));$find[]=$f[0];$change[]=substr($f[1],0,-1);}}
+if($_POST['name']!=""){setcookie("name",trim($_POST['name']),time()+34000);}
+if($_COOKIE['name']!=""&&isset($find)){$safe=str_replace($find,$change,$_COOKIE['name']);}elseif($_COOKIE['name']!=""){$safe=$_COOKIE['name'];}
 
 function roulette($obj){
 $obj = str_replace("/","\\/",$obj);
@@ -111,7 +111,7 @@ if($a==1){for($i=0;$i<$count;$i++){if($_POST['del']!=$i && $_POST['del']!=$i-1){
 
 #Refresh List (intentionally using softer checks)
 if($_GET['b']=="b"&&$_COOKIE['o']!=""){
-$sec=min(intval($_COOKIE['refresh']),4)?:'4';
+$sec=max(intval($_COOKIE['refresh']),4)?:'4';
 $names=glob("*.visit");$arr=[];
 #https://stackoverflow.com/posts/3298787/revisions
 array_multisort(array_map('filemtime',$names),SORT_NUMERIC,SORT_DESC,$names);$e=0;$i=0;
@@ -141,13 +141,14 @@ else{if($_GET['a']=="a"){header('Location: g3.php?next=28.php?a=a');}elseif($_GE
 
 if($_GET['b']=='d'){
 include('g3.php');
-
+if(file_get_contents("3.html")!=""){
+$file=db("3.html");foreach($file as $filter){$f=explode("|",str_replace("\n","",$filter));$find[]=$f[0];$change[]=substr($f[1],0,-1);}}
 function process($e,$find,$change)
-{if($e==$_POST['name']){$e=str_replace('Aera23','alkaline',$e);$e=str_replace('Aera344','Aera23',$e);$e=substr($e,0,min(strlen($e),50));}
+{if($e==$_POST['name']){$e=substr($e,0,min(strlen($e),50));}
 $e=htmlspecialchars($e);
 $x=['hild p','teleg','t.me','h i l d','nigg','i watch pedo','incest','pajeet','notbu','edofil','opic link','invite/i=','cp vid','kill them all','yatl','05dd3b3dd','ussy','cheese pizza','cp tele','1705262',
 'ck a 8yo','tortub','changehd','cream pie','porn?','hotties','slut','on fucking','yatl','edoli','gekkko','loli','sexy','j2gpb','rape th','oy vid','irl vid','ucking my sis','horny','pizza link','cartelcp',
-'cum in','pedo links','selling my n','05962e20f','gas immigrant','LITTLE GIRL','to download cp','cp link ?','kidfli','cum on','jewish ga','r*pe and m*rder','yos are sex','onion center','teen vid','nude',
+'cum in','pedo links','selling my n','05962e20f','gas immigrant','LITTLE GIRL','download cp','cp link ?','kidfli','cum on','jewish ga','r*pe and m*rder','yos are sex','onion center','teen vid','nude',
 'tits?','whore','coxpql','killing their kid','kill their offspr','ionist','ewish retard','wipe their family','racemix','PREPUBE','6 years old f','1488','stupid jew','club p','ldren p','porn vid','uoxqi4',
 'give us cp','anti-White','a very young','pandemic hoax','all my cum','gonna cum','schoolgir','reteen',' cepe ','can i sex','his fantasy','my breasts','rape my','evki.uno','cums on','rape or incest',
 'erection','snapchat blackm','mega.nz/folder','nipplejob','little boys','boobjob','blow job','my favorite age','05b0f5bb','looking for porn','onlyfan','extreme porn','hairy cock','kinder porn','Avenue',
@@ -235,9 +236,8 @@ else{$cfi=$_COOKIE['col'];}}
 
 if($_GET['b']=='d'){
 $comment=trim($_POST["comment"]);$z=2;#Basics
-
 #Saving messages
-if($_POST["name"]!=""&& $comment!=""&&$_COOKIE['u']!=$_REQUEST['q']){$z=5;
+if($_POST["name"]!=""&&$comment!=""&&$_COOKIE['u']!=$_REQUEST['q']){$z=5;
 
 #Prevent multiple submissions within 2s of last one
 if(file_get_contents("".crc())==''){file_put_contents("".crc(),time());}
@@ -289,7 +289,6 @@ elseif($_POST['rpl']!=""&&$_POST['rpl']<0){$line=abs($_POST['rpl']);$reply=$file
 $e.=crc();
 if(strlen($_POST["col"])==7){$colour = htmlspecialchars($_POST['col']);}
 else{$colour = htmlspecialchars($_COOKIE["col"]);}
-
 $write=$e.'-'.'<i>'.date("m-jS H:i:s").'</i> |<span style="color:'.$colour.';font-size:'.($em ?: '1').'em;font-family:'.(htmlspecialchars($_POST['f']) ?: 'inherit').'">'.$txt."</span>";$nl="
 
 ";preg_match("/\/pm ([0-9]{3}) ?/i",strtolower(process($_POST['comment'],$find,$change)),$matches);
@@ -388,19 +387,20 @@ echo'<input style="background:#252;color:#fff" type="submit" onclick="window.nav
 else{echo'<style>#show,.content{display:none}
 #show:checked~.content{display:block !important}label u{color:#afa}label u:hover{color:#0ff}
 show,.hidden{display:block}#show:checked~.hidden{display:none}'.$hide.'
-</style><input id="show" type=checkbox><label for="show"><u>'.$phrase.' Help<b></b></u> | <a href="music.php" target="_blank">🎵</a> | <a href="22.php" target="_blank">🎨</a> | <a href="colour.php" target="_blank">🚅</a> | <a href="files.php" target="_blank">⬆️</a>';
+</style><input id="show" type="checkbox"><label for="show"><u>'.$phrase.' Help<b></b></u> | <a href="music.php" target="_blank">🎵</a> | <a href="22.php" target="_blank">🎨</a> | <a href="colour.php" target="_blank">🚅</a> | <a href="files.php" target="_blank">⬆️</a>';
  if($_COOKIE['9u9dyi']!='' && $_GET['9u9dyi']==""){echo'<form action="28.php" style="display:inline"><input type="submit" name="a" value="Settings"></form>';}
 echo'<br><span class="r">UTC: <span class="g"><span class="e0">0</span>';
 for($i=0;$i<15;$i++){if($i!="0"){$e=((24-$i)%24);}else{$e="00";}echo'<span class="e'.$i.'">'.((24-$i)%24).'</span>';}
 for($i=15;$i<24;$i++){echo'<span class="e'.$i.'">0'.(24-$i).'</span>';}echo'<span class="x">:</span>';
 for($i=0;$i<6;$i++){echo'<span class="d'.$i.'">'.(5-$i).'</span>';}
 for($i=0;$i<10;$i++){echo'<span class="c'.$i.'">'.(9-$i).'</span>';} echo'<span class="x">:</span>';
-for($i=0;$i<6;$i++){echo'<span class="b'.$i.'">'.(5-$i).'</span>';}  for($i=0;$i<10;$i++){ echo'<span class="a'.$i.'">'.(9-$i).'</span>';}
+for($i=0;$i<6;$i++){echo'<span class="b'.$i.'">'.(5-$i).'</span>';}  for($i=0;$i<10;$i++){echo'<span class="a'.$i.'">'.(9-$i).'</span>';}
 echo'<br></span></label><div class="content"><span style="color:#66e">Set standard Tor security for audio pings. <i>(Type "/pm '.crc().' message" for self-PM.)</i>
 <br>&gt;Last Online is based on browser refresh, which can mislead if a user leaves their tab open while AFK, or their browser stops refreshing due to temporary network timeout.</span>
 <p style="color:#8e8">
 Link help: 🎵 Music list | 🎨 ColourGen | 🚅 Latency Test| ⬆️ Upload/View Files<br>
-Emojis and commands: :alien: :books: :tree: :book: :kiss: :dog: :fire: :ice: :cash:<br><i style="color:#afa">MORE: :egg: :taco: :eggplant: :rocket: :ghost: :elephant: :snail: :lips: :pumpkin: :xmas: :bird: :lovedock: :docking: :spacedock: :miii:</i><br><span style="color:#e6e">:shrug: /shrug :goat: :rainbow: /wow /symbols :cat: :music: :shroom: /me, /dice, <mark style="color:red;background:#400"><3</mark>, <mark>:)</mark>, <mark>:3)</mark> , <mark>XD</mark>, <mark>^.^</mark>, <mark>*.*</mark>, <mark>*-*</mark></a>, :panda: :fox: :duck:</span></p>';if($config[5]==1){echo'"/fa test1|test2" adds a filter which replaces test1 with test 2<br>
+<mark style="background:#600;color:#8f8">PROTECT your nick with nickprotect! Helps prevent impersonation | Syntax: /np codename</mark><br>
+Emojis and commands: :alien: :books: :tree: :book: :kiss: :dog: :fire: :ice: :cash:<br><i style="color:#afa">MORE: :egg: :taco: :eggplant: :rocket: :ghost: :elephant: :snail: :lips: :pumpkin: :xmas: :bird: :lovedock: :docking: :spacedock: :miii:</i><br><span style="color:#e6e">:shrug: /shrug :goat: :rainbow: /wow /symbols :cat: :music: :shroom: /me, /dice, <mark style="color:red;background:#400"><3</mark>, <mark>:)</mark>, <mark>:3)</mark> , <mark>XD</mark>, <mark>^.^</mark>, <mark>*.*</mark>, <mark>*-*</mark></a>, :panda: :fox: :duck:</span></p>';if($config[5]==1||$_COOKIE['9u9dyi']=='t'){echo'"/fa test1|test2" adds a filter which replaces test1 with test 2<br>
 "/fr 1" removes the first filter<br>
 "/fl" lists all the filters in a tiny frame<br>
 "/bm [message]" for changing the topic text<br>
@@ -414,7 +414,7 @@ $bo[1]='name="aa" src="28.php?a=a" autofocus style="width:100%;height:42em" name
 
 echo'
 </div><div class="hidden"><p style="display:inline">Please be friendly (bookmark too?) <mark>:)</mark> | ETH: 0x223Da527733500ce9C914Bfacc889D4a90f0b26a</p></div><iframe id="tx" style="float:right" src="28.php?b=b"></iframe><iframe '.$bo[0].'></iframe><br><b style="color:#afa">Welcome to '.$phrase.' | <a href="28.php?a=a" target="aa">🔄 messages</a> | <a href="28.ph'.($_GET['bottom']?'p':'p?bottom=1').'">🔁 Flip</a></b>
-<iframe '.$bo[1].'></iframe><audio src="X-silence.mp3" autoplay></audio></body></html>';exit();}}
+<iframe '.$bo[1].'></iframe></body></html>';exit();}}
 
 else{if($_COOKIE['col']==""){$_COOKIE['col']='#88ff88';}function pt($a,$i){
 $z='</button></form>';$e=crc()."-";$b='';
@@ -433,7 +433,7 @@ preg_match("/([0-9]{3})-/i",strtolower($a),$matches);
 $b.='&nbsp;<form action="28.php?b=d" target="d" method="post"><button class="v" name="pm" value="/pm '.$matches[1].' "><span style="font-size:0.4em">&nbsp;</span><b>PM</b><span style="font-size:0.4em">&nbsp;</span></button></form>';}
 echo$b;return str_replace(date(">m-"),">",str_replace(date(">m-jS "),">",$a));}
 
-$sec=min(intval($_COOKIE['refresh']),4)?:'4';
+$sec=max(intval($_COOKIE['refresh']),4)?:'4';
 echo'<!DOCTYPE html><html>';
 #Advanced notifications
 $b=($config[4]*2)?:80;#(intval($_REQUEST['m'])*2)?:24;#$b=abs(min($b,48));
@@ -458,7 +458,7 @@ if($_GET['t']!=$time&&$_GET['t']!=""&&$_COOKIE['audio']!="off"&&$_COOKIE['audio'
 echo'<pre style="word-wrap:break-word;line-height:1.7;margin-top:-0.1em"><a href="canary.txt" target="_blank">'.htmlspecialchars_decode($config[3]).'</a><br>';
 
 if($_COOKIE['9u9dyi']!=""){$v='*';}else{$v='';}
-if(isset($_COOKIE['name'])){file_put_contents(str_ireplace($find,$change,strtr($_COOKIE['name'],":?/\\*|<>  '","__________")).'.visit','|<span style="color:'.htmlspecialchars($_COOKIE['col']).'">'.date("m-jS H:i:</\s\p\a\\n>s").$v,FILE_APPEND);}
+if(isset($_COOKIE['name'])){file_put_contents(strtr($safe,":?/\\*|<>  '","__________").'.visit','|<span style="color:'.htmlspecialchars($_COOKIE['col']).'">'.date("m-jS H:i:</\s\p\a\\n>s").$v,FILE_APPEND);}
 
 for($i=$time;$i>=max(0,$time-$b);$i-=2){
 #M/PM/CRC checks
@@ -466,7 +466,7 @@ if(strpos($file[$i],"/m ")!==false){
 if($_COOKIE['9u9dyi']!=""){echo str_replace('/m ','',preg_replace('|([0-9]{3}-)|i', '<b><u>[M]</u></b> ------$1', pt($file[$i],$i)));continue;}else{$i-=2;$b+=2;continue;}}
 if(!preg_match("/\/pm ([0-9]{3})([0-9]{3})-\^!/i",strtolower($file[$i]),$matches)){
 if(strlen($file[$i])>2){echo pt($file[$i],$i);}}
-else{if($matches[1]==crc() || $matches[2]==crc()){echo explode("^!",pt($file[$i],$i))[1];}else{$i-=2;$b+=2;}}}
+else{if($matches[1]==crc()||$matches[2]==crc()){echo explode("^!",pt($file[$i],$i))[1];}else{$i-=2;$b+=2;}}}
 }
 #echo'<!--span class="w">Load: </span><a href="28.php?a=a&m='.min($b,64).'&refresh='.($sec*3).'">More</a> | <a href="28.php?a=a&m='.round($b/4).'&refresh='.max($sec/3,4).'">Less</a-->';
-?></pre></html> 
+?></pre></html>
