@@ -1,7 +1,7 @@
 <?php
-if(!isset($config)){$config=explode("|",file_get_contents("config.txt"));}
-$phrase=$config[2]??'Chat';
+$phrase='Chat';
 include_once('g3.php');
+$phrase=$config[2];
 $gf=crc32("127.0.0.1").".dat";
 if(isset($_GET['9u9dyi'])&&$_GET['9u9dyi']=="t"){setcookie("9u9dyi","t",time()+432000);echo'<mark>Mod cookie set</mark> <form action="28.php" style="display:inline"><input type="submit" name="a" value="Settings"></form>';}
 if(isset($_GET['d'])){
@@ -64,6 +64,10 @@ if(file_exists('testy.php')){echo'<form action="testy.php" method="get" target="
 
 function s_t($t){return preg_replace("/<(.*) style='(.*)'>(.*)<\/(.*)>/i","$3",str_replace('isAFK','/afk',strip_tags($t,'<i><mark><br><q><strong>')));}
 
+function premium($qq,$name){$col=';';
+if($name=='METH'||strpos('YEW',$name)!==false||strpos('COKE',$name)!==false){$col=';color:#0ff';}
+return (($qq>1000000&&$qq<20000000)?';color:#0f0':$col);}
+
 #if(npr($_COOKIE['name'])=="n"){$_COOKIE['ignore']="i";}
 if(!empty($_POST['comment'])){
 if(file_exists("".crc())){$d=($_SERVER['REQUEST_TIME_FLOAT']-file_get_contents("".crc()));}
@@ -112,13 +116,13 @@ if(isset($_POST['e'])&&$_POST['e']!=file_get_contents("canary.txt")){file_put_co
 echo'<!DOCTYPE html><html><style>button:hover,a:hover{color:#0ff}button,input{background:#464;color:#fff;border-radius:8px;padding:0.4em;margin:0.2em;border:2px solid #050}button:hover,input:hover{border:2px solid #0a0}html{margin:3em;font-family:sans-serif}*{background:#000;color:#0af}b,h2{color:#0cf}form{display:inline}textarea{padding:0.3em;border-radius:15px}</style>'.$v.'<h2>'.$q.' Config <a href="28.php"><button style="display:inline">BACK</button></a></h2>
 <a href="28.php?'."9u9dyi".'=t">Pls BOOKMARK admin link!</a><br><form action="" method="post" id="f">
 <b>Name of chat:</b><input name="c" value="'.$config[2].'" size="22"><br>
-<b>Characters per second :</b><input name="a" value="'.($config[0]??8).'" size="3"><br>
-<b>Message max length:</b><input name="b" value="'.($config[1]??300).'" size="3"><br>
-<b>Max Messages in a row:</b><input name="h" value="'.($config[6]??7).'" size="3"><br>
-<b>Messages to show:</b><input name="f" value="'.($config[4]??30).'" size="3"><br>
-<b>Filter edit:</b><input name="g" value="'.($config[5]??1).'" size="2"><b>(2 = admin, 1 = all)</b><br>
+<b>Characters per second :</b><input name="a" value="'.$config[0].'" size="3"><br>
+<b>Message max length:</b><input name="b" value="'.$config[1].'" size="3"><br>
+<b>Max Messages in a row:</b><input name="h" value="'.$config[6].'" size="3"><br>
+<b>Messages to show:</b><input name="f" value="'.$config[4].'" size="3"><br>
+<b>Filter edit:</b><input name="g" value="'.$config[5].'" size="2"><b>(2=admin, 1=all)</b><br>
 <b>Invite code (30 on public chat):</b><input name="i" value="'.(base64_decode(strrev($config[7]))??30).'" size="8"><br>
-<b>Online list (s) </b><input name="j" value="'.($config[8]??'30').'" size="3"><br><br>
+<b>Online list (s)</b><input name="j" value="'.$config[8].'" size="3"><br><br>
 <button>Save</button><br><br>
  Canary:<br><br><input name="d" value="'.$config[3].'" size="'.(strlen($config[3])??35).'" placeholder="Link"><br>
  <textarea name="e" class="v" form="f" cols="80" rows="40" placeholder="canary.txt">'.htmlspecialchars(file_get_contents("canary.txt")).'</textarea>';
@@ -161,8 +165,8 @@ $qq=array_key_last($z);
 $time=$z[$qq];}
 $i++;
 $name=str_replace('.cache','',str_replace('.visit','',str_replace('','',$name)));
-/*if(isset($_COOKIE['9u9dyi'])){$p='<tr><td><form action="28.php?b=c" method="post" style="display:inline"><button name="del" value="'.$name.'.visit" class="t">'.(($name!='0000')?(($name==$safe)?'⚠️':'❌'):'⚠️').'</button></button></form></td><td style="text-align:center">';}else{}*/$p='<tr><td style="text-align:center">';
-$arr[]=$p.str_replace("alkalineLight","Moonlight",$name).'</td><td style="text-align:center">'.str_replace("3 ", "31 ",str_replace(date("jS"),"",str_replace(date("m-"),"",$time.'<span class="x"></td><td style="text-align:right"><a href="28.php?f='.$name.'.visit&i='.max($qq-600,0).'" target="_blank">'.number_format((($name=='Anonymo')?($qq+50000):$qq)))))."</a></td>
+/*if(isset($_COOKIE['9u9dyi'])){$p='<tr><td><form action="28.php?b=c" method="post" style="display:inline"><button name="del" value="'.$name.'.visit" class="t">'.(($name!='0000')?(($name==$safe)?'⚠️':'❌'):'⚠️').'</button></button></form></td><td style="text-align:center">';}else{}*/$p='<tr><td style="text-align:center'.premium($qq,$name).'">';
+$arr[]=$p.$name.'</td><td style="text-align:center">'.str_replace("3 ", "31 ",str_replace(date("jS"),"",str_replace(date("m-"),"",$time.'<span class="x"></td><td style="text-align:right"><a href="28.php?f='.$name.'.visit&i='.max($qq-600,0).'" target="_blank">'.number_format((($name=='Anonymo')?($qq+50000):$qq)))))."</a></td>
 </tr>";}else{break;}}
 $tt='';$z=0;foreach($arr as $str){if($z<13){$tt=$tt.$str;}$z++;}
 echo"<!DOCTYPE html><html><meta http-equiv='refresh' content='$sec 28.php?b=b&o=$ee'>";
@@ -339,10 +343,8 @@ echo' value="'.str_replace('magicCcCcCcCcC','magic',str_replace('o--0-oo-0--oo0-
 
 if(isset($_REQUEST['show'])){
 echo'<span>. . Emphasis (0.7-1.5em):</span>
-<input name="e" size="3" value="'.min(htmlspecialchars($_COOKIE['e']??$_REQUEST['e']??1),1.5).'" max="1.5">
-<span>Refresh* (s)</span>
-<input name="refresh" size="3" value="'.htmlspecialchars($_POST['refresh']??$_COOKIE['refresh']??'').'" min="3" placeholder="4">
-<span>Audio (on|off)</span>
+<input name="e" size="3" value="'.min(htmlspecialchars($_COOKIE['e']??$_REQUEST['e']??1),1.5).'" max="1.5"><span>Refresh* (s)</span>
+<input name="refresh" size="3" value="'.htmlspecialchars($_POST['refresh']??$_COOKIE['refresh']??'').'" min="3" placeholder="4"><span>Audio (on|off)</span>
 <input name="audio" size="3" value="'.htmlspecialchars($_POST['audio']??$_COOKIE['audio']??'').'">
 <span>Font</span><input name="f" value="'.htmlspecialchars($_COOKIE['f']??$_REQUEST['f']??'').'" placeholder="Type s for fonts" list="f">
 <datalist id="f"><option value="monospace"><option value="sans-serif"><option value="serif"><option value="cursive"><option value="fantasy"></datalist>
@@ -398,13 +400,16 @@ elseif(($i&1)==0){$b.=$btn.'z" title="Delete (unavailable)">🗄️'.$z;}
 
 $btn='&nbsp;<form action="28.php?b=d'.((isset($_COOKIE['n']))?'&show=1':'').'" method="post" target="d"><button name="reply" value="-'.$i.'" class="';
 if(isset($e)&&strpos($a,$e)!==false){$b.=$btn.'v" title="Edit message">'.(strpos($_SERVER['HTTP_USER_AGENT'],'(Windows NT 10.0; Win64; x64; rv:1)')||strpos($_SERVER['HTTP_USER_AGENT'],'Edg')?'':'_').'🖌️'.$z;}
-elseif(($i&1)==0){
-#Preg match for PM id
+elseif(($i&1)==0){#Preg match for PM id
 preg_match("/([0-9]{3})-/i",strtolower($a),$matches);
 $b.='&nbsp;<form action="28.php?b=d'.((isset($_COOKIE['n']))?'&show=1':'').'" target="d" method="post"><button class="v" title="Private message user" name="pm" value="/pm '.$matches[1].' "><span style="font-size:0.4em">&nbsp;</span><b>PM</b><span style="font-size:0.4em">&nbsp;</span></button></form>';}
 
 if(strpos($a,'/m ')!==false){$b=str_ireplace('<b>PM</b>','<b>*M</b>',str_ireplace('/pm '.$matches[1],'/m ',str_ireplace('Private message user','Send moderator message',$b)));}
-echo$b.'[';return str_replace('-</button>','-]</button>',str_replace('float:right','margin-left:20em;float:left',str_replace(':3em">',':3em">[',str_replace(']|',']]',str_replace(' |<','] <',str_replace(date(">m-"),">",str_replace(date(">m-jS "),">",$a)))))));}
+echo$b.'[';
+#Bugfix
+if(strpos($a,'<button style')!==false){$a.='</button>';}
+#Transformations
+return str_replace('-</button>','-]</button>',str_replace('float:right','margin-left:20em;float:left',str_replace(':3em">',':3em">[',str_replace(']|',']]',str_replace(' |<','] <',str_replace(date(">m-"),">",str_replace(date(">m-jS "),">",$a)))))));}
 
 $sec=max(intval($_COOKIE['refresh']??'4'),4);$file=db("1id8sjl.txt");
 echo'<!DOCTYPE html><html>';$cfi=htmlspecialchars($_POST['col']??$_COOKIE['col']);
@@ -476,7 +481,6 @@ if(isset($_COOKIE['9u9dyi'])){echo str_replace('/m ','',preg_replace('|([0-9]{3}
 if(!preg_match("/\/pm ([0-9]{3})([0-9]{3})-\^!/i",strtolower($file[$i]??' '),$matches)){
 if(strlen($file[$i]??' ')>2){echo pt($file[$i],$i);}}
 else{if($matches[1]==crc()||$matches[2]==crc()){echo str_replace(crc(),'<b>'.crc().'</b>',str_replace($matches[2].'-',$matches[2].'>'.$matches[1].'|',explode("^!",pt($file[$i],$i,1))[1]));}else{$b+=2;}}
-$i-=2;}
-}
+$i-=2;}}
 #echo'<!--span class="w">Load: </span><a href="28.php?a=a&m='.min($b,64).'&refresh='.($sec*3).'">More</a> | <a href="28.php?a=a&m='.round($b/4).'&refresh='.max($sec/3,4).'">Less</a-->';
 ?></pre></html>
