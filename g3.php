@@ -1,6 +1,6 @@
 <?php
 $hpu='unlock.txt';
-if(!isset($config)){$config=explode("|",file_get_contents("config.txt"));}
+if(!isset($config)){if(file_exists('config.txt')){$config=explode("|",file_get_contents("config.txt"));}else{$config=['8','300','Chat','','30','1','7','30','30'];}}
 if(empty($_COOKIE['temptime'])){setcookie("temptime",time(),time()+3600);$_COOKIE['temptime']=time();}
 if(strpos($_SERVER['REQUEST_URI'],"/g3.php/")!==false){exit('<meta http-equiv="refresh" content="0 /g3.php"/><mark style="font-size:1.2em;padding:0.3em">Auto redirect</mark>');}
 #Common functions
@@ -207,7 +207,7 @@ exit("<meta http-equiv='refresh' content='4'><mark>Solve captcha, should auto re
 }
 else{
 if(isset($_REQUEST['id'])){$e=file_get_contents($live.$_POST['id'].'eep.txt');}
-if(isset($e)&&$_REQUEST['q'.base_convert(crc32($_REQUEST['id']."9u9dyi"),10,36)]!=""&&strtolower(trim($_REQUEST['q'.base_convert(crc32($_REQUEST['id']."9u9dyi"),10,36)],' \\'))==$e)
+if(!empty($_POST['comment'])&&isset($e)&&$_REQUEST['q'.base_convert(crc32($_REQUEST['id']."9u9dyi"),10,36)]!=""&&strtolower(trim($_REQUEST['q'.base_convert(crc32($_REQUEST['id']."9u9dyi"),10,36)],' \\'))==$e)
 {#Invite check
   if(file_exists("config.txt")){$ic=base64_decode(strrev(explode('|',file_get_contents("config.txt"))[7]));}else{$ic=30;}
   if(isset($_POST['test'])&&$_POST['test']!=$ic&&empty($_REQUEST['9u9dyi'])&&empty($_COOKIE['9u9dyi'])){echo"<mark>Bad invite code</mark>";}
@@ -222,18 +222,19 @@ if(isset($_POST['name'])&&file_exists($hpu)&&($_POST['name']==file_get_contents(
 if(file_exists($hpu)&&file_get_contents($hpu)=='"'&&!isset($_COOKIE['9u9dyi'])){file_put_contents("crc.txt",$_POST['name'].date(".H:i:s.|"),8);exit('<meta http-equiv="refresh" content="4">!');}
 
 filter($_POST['comment'],3);
-if(strlen($_POST['name'].$_POST['comment'])/(time()-filemtime($live.$_POST['id'].'eep.txt'))<5){$ff=makesum(crc32(base64_encode("127.0.0.1".time()))).'-'.'<i>'.date("m-jS H:i:s").'</i> |<span style="color:'.htmlspecialchars($_POST['col']).'">'.process(npr($_POST['name']),$find,$change,$config).' - '.process($_POST['comment'],$find,$change,$config)."</span>";}
+if(strlen($_POST['name'].$_POST['comment'])/(time()-filemtime($live.$_POST['id'].'eep.txt'))<(($config[0]??8)/1.5)){$ff=makesum(crc32(base64_encode("127.0.0.1".time()))).'-'.'<i>'.date("m-jS H:i:s").'</i> |<span style="color:'.htmlspecialchars($_POST['col']).'">'.process(npr($_POST['name']),$find,$change,$config).' - '.process($_POST['comment'],$find,$change,$config)."</span>";}
 
 file_put_contents("1id8sjl.txt",str_ireplace('mark','i',$ff??'*')."\n\n",FILE_APPEND);
 g($l);
-}}elseif(isset($_REQUEST['id'])){echo"<mark>Invalid captcha solve, </mark>";
+}}elseif(isset($_REQUEST['id'])){echo"<mark>Invalid captcha solve, ";
 file_put_contents("fail.old",intval(file_get_contents("fail.old"))+1);
 $xxx=strlen($_REQUEST['q'.base_convert(crc32($_REQUEST['id']."9u9dyi"),10,36)]);
-if($xxx==4){echo"<mark>don't type 4 characters directly</mark>";}
-elseif($xxx==3&&strlen($e)!=3){echo"<mark>don't type 3 characters directly</mark>";}
-elseif($xxx<3&&$xxx!=0||$xxx==5){echo"<mark>wrong length</mark>";}
-elseif($xxx==0){echo"<mark>blank solution is never valid</mark>";}
-else{echo"<mark>maybe retry?</mark>";}
+if($xxx==4){echo"don't type 4 characters directly";}
+elseif($xxx==3&&strlen($e)!=3){echo"don't type 3 characters directly";}
+elseif($xxx<3&&$xxx!=0||$xxx==5){echo"wrong length";}
+elseif($xxx==0){echo"blank solution is never valid";}
+elseif(empty($_POST['comment'])){echo"entry message is missing";}
+else{echo"maybe retry?";}echo'</mark>';
 }
 }
 $cf=["#ff33f",'#dd00f','#ff334',"#11ffe","#eeaa0","#00dfd","#ff880","#ffff0","#00ff0","#0088f"];
