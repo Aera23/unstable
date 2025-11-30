@@ -1,7 +1,7 @@
 <?php
-$phrase='Chat';
+if(!isset($config)){$config=explode("|",file_get_contents("config.txt"));}
+$phrase=$config[2]??'Chat';
 include_once('g3.php');
-$phrase=$config[2];
 $gf=crc32("127.0.0.1").".dat";
 if(isset($_GET['9u9dyi'])&&$_GET['9u9dyi']=="t"){setcookie("9u9dyi","t",time()+432000);echo'<mark>Mod cookie set</mark> <form action="28.php" style="display:inline"><input type="submit" name="a" value="Settings"></form>';}
 if(isset($_GET['d'])){
@@ -64,9 +64,9 @@ if(file_exists('testy.php')){echo'<form action="testy.php" method="get" target="
 
 function s_t($t){return preg_replace("/<(.*) style='(.*)'>(.*)<\/(.*)>/i","$3",str_replace('isAFK','/afk',strip_tags($t,'<i><mark><br><q><strong>')));}
 
-function premium($qq,$name){$col=';';
-if($name=='METH'||strpos('YEW',$name)!==false||strpos('COKE',$name)!==false){$col=';color:#0ff';}
-return (($qq>1000000&&$qq<20000000)?';color:#0f0':$col);}
+function premium($qq,$name){preg_match('/color:#.{6}/m',file_get_contents(''.$name.'.visit.cache'),$matches);$col=';'.$matches[0];
+if($name=='METHHEAD'){$col.=';background:#044';}
+return (($qq>1000000&&$qq<20000000)?';background:#000'.$col:$col);}
 
 #if(npr($_COOKIE['name'])=="n"){$_COOKIE['ignore']="i";}
 if(!empty($_POST['comment'])){
@@ -116,13 +116,13 @@ if(isset($_POST['e'])&&$_POST['e']!=file_get_contents("canary.txt")){file_put_co
 echo'<!DOCTYPE html><html><style>button:hover,a:hover{color:#0ff}button,input{background:#464;color:#fff;border-radius:8px;padding:0.4em;margin:0.2em;border:2px solid #050}button:hover,input:hover{border:2px solid #0a0}html{margin:3em;font-family:sans-serif}*{background:#000;color:#0af}b,h2{color:#0cf}form{display:inline}textarea{padding:0.3em;border-radius:15px}</style>'.$v.'<h2>'.$q.' Config <a href="28.php"><button style="display:inline">BACK</button></a></h2>
 <a href="28.php?'."9u9dyi".'=t">Pls BOOKMARK admin link!</a><br><form action="" method="post" id="f">
 <b>Name of chat:</b><input name="c" value="'.$config[2].'" size="22"><br>
-<b>Characters per second :</b><input name="a" value="'.$config[0].'" size="3"><br>
-<b>Message max length:</b><input name="b" value="'.$config[1].'" size="3"><br>
-<b>Max Messages in a row:</b><input name="h" value="'.$config[6].'" size="3"><br>
-<b>Messages to show:</b><input name="f" value="'.$config[4].'" size="3"><br>
-<b>Filter edit:</b><input name="g" value="'.$config[5].'" size="2"><b>(2=admin, 1=all)</b><br>
+<b>Characters per second :</b><input name="a" value="'.($config[0]??8).'" size="3"><br>
+<b>Message max length:</b><input name="b" value="'.($config[1]??300).'" size="3"><br>
+<b>Max Messages in a row:</b><input name="h" value="'.($config[6]??7).'" size="3"><br>
+<b>Messages to show:</b><input name="f" value="'.($config[4]??30).'" size="3"><br>
+<b>Filter edit:</b><input name="g" value="'.($config[5]??1).'" size="2"><b>(2 = admin, 1 = all)</b><br>
 <b>Invite code (30 on public chat):</b><input name="i" value="'.(base64_decode(strrev($config[7]))??30).'" size="8"><br>
-<b>Online list (s)</b><input name="j" value="'.$config[8].'" size="3"><br><br>
+<b>Online list (s) </b><input name="j" value="'.($config[8]??'30').'" size="3"><br><br>
 <button>Save</button><br><br>
  Canary:<br><br><input name="d" value="'.$config[3].'" size="'.(strlen($config[3])??35).'" placeholder="Link"><br>
  <textarea name="e" class="v" form="f" cols="80" rows="40" placeholder="canary.txt">'.htmlspecialchars(file_get_contents("canary.txt")).'</textarea>';
@@ -171,7 +171,7 @@ $arr[]=$p.$name.'</td><td style="text-align:center">'.str_replace("3 ", "31 ",st
 $tt='';$z=0;foreach($arr as $str){if($z<13){$tt=$tt.$str;}$z++;}
 echo"<!DOCTYPE html><html><meta http-equiv='refresh' content='$sec 28.php?b=b&o=$ee'>";
 if(isset($_GET['o'])&&$_GET['o']!=$ee&&isset($_COOKIE['ina'])&&$_GET['b']=='b'){gt();echo'<mark style="display:inline">*</mark>';}
-echo"<style>tr{background:#031}tr:nth-child(n+".($ee+1)."){background:#400}center{font-family:sans-serif}a{color:#8f8}button{background:#f88;border-radius:8px;border:2px solid #f00}table{border-spacing:0}td{border:1px solid #afa;color:#fff;border-radius:6px;background:inherit;line-height:1.3;font-size:16px;max-width:10em;padding:0.2em}tr:nth-child(2n) td{border:1px solid #060}tr:nth-child(2n+".((($ee&1)==0?2:1)+$ee).") td{border:1px solid #740000 !important}tr:nth-child(2n+".((($ee&1)==0?1:2)+$ee).") td{border:1px solid #f16464 !important}.x{color:#888}.t:hover{border:2px solid #80f;background:#f80}</style><center><span style='font-size:17px;background:inherit;color:#afa'>";
+echo"<style>tr{background:#031}tr:nth-child(n+".($ee+1)."){background:#400}center{font-family:sans-serif}a{color:#8f8}button{background:#f88;border-radius:8px;border:2px solid #f00}table{border-spacing:0}td{border:1px solid #afa;color:#fff;border-radius:6px;background:inherit;line-height:1.3;font-size:16px;max-width:10em;padding:0.2em}tr:nth-child(2n) td{border:1px solid #060}tr:nth-child(2n+".((($ee&1)==0?2:1)+$ee).") td{border:1px solid #000000 !important}tr:nth-child(2n+".((($ee&1)==0?1:2)+$ee).") td{border:1px solid #f16464 !important}.x{color:#888}.t:hover{border:2px solid #80f;background:#f80}</style><center><span style='font-size:17px;background:inherit;color:#afa'>";
 $ee='Last online: '.$ee;if(isset($_COOKIE['9u9dyi'])){$ee='[Mod] '.$ee;}
 exit($ee.' (last '.($config[8]??30).'s)</span><br><table>'.$tt.'</table></center></html>');}
 
@@ -208,7 +208,10 @@ if(strpos($_POST['comment'],'/ai ')===0){$_POST['comment'] = str_replace('/ai ',
 if(strpos($_POST['comment'],'/np ')===0){
 if(!strpos($_POST['comment'],$_POST['nick'])){
 $p=htmlspecialchars(str_replace('/np ','',str_replace('|','',nl2br($_POST['comment']))));$z=4;
-if(strlen($_POST['comment'])>5&&$safe==$_COOKIE['name']){$cf=fopen("1id8sjl.txt.old","a") or die($m);$e=htmlspecialchars(str_replace("/np ","",$_POST['name']."|alkaline \n".$_POST['comment'].'|'.$_POST['name']." \n"));fwrite($cf, $e) or die("<a href='28.php?b=d'><mark>Can't write</mark></a>");fclose($cf);$z=4;
+
+if($p==$_COOKIE['name']){echo"<mark>Nickname and codename cannot be the same</mark>";}
+
+if(strlen($_POST['comment'])>5&&$safe==$_COOKIE['name']&&$p!=$_COOKIE['name']){$cf=fopen("1699686263.old.old","a") or die($m);$e=htmlspecialchars(str_replace("/np ","",$_POST['name']."|alkaline \n".$_POST['comment'].'|'.$_POST['name']." \n"));fwrite($cf, $e) or die("<a href='28.php?b=d'><mark>Can't write</mark></a>");fclose($cf);$z=4;
 echo"<mark>Protection added for ".htmlspecialchars($_POST['name']).", use $p instead</mark>";$_POST['name']=$p;$_COOKIE['name']=$p;setcookie("name",htmlspecialchars_decode($p),time()+35000);}else{$_POST['comment']='';}}else{echo"<mark>Nick and codename cannot be the same</mark>";}}
 #Topic
 if(strpos($_POST['comment'],'/bm ')===0&&($config[5]==1||!empty($_COOKIE['9u9dyi']))){

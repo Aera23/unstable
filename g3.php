@@ -1,12 +1,13 @@
 <?php
+if(!file_exists('config.txt')){include('setup.php');exit;}
 $hpu='unlock.txt';
-if(!isset($config)){if(file_exists('config.txt')){$config=explode("|",file_get_contents("config.txt"));}else{$config=['8','300','Chat','','30','1','7','30','30'];}}
+if(!isset($config)){$config=explode("|",file_get_contents("config.txt"));}
 if(empty($_COOKIE['temptime'])){setcookie("temptime",time(),time()+3600);$_COOKIE['temptime']=time();}
 if(strpos($_SERVER['REQUEST_URI'],"/g3.php/")!==false){exit('<meta http-equiv="refresh" content="0 /g3.php"/><mark style="font-size:1.2em;padding:0.3em">Auto redirect</mark>');}
 #Common functions
 function npr($e){
-if(file_exists("1id8sjl.txt.old")){
-$file=file("1id8sjl.txt.old");foreach($file as $filter){$f=explode("|",str_replace("\n","",$filter));$ee[]=$f[0]??'&27;';$xx[]=substr($f[1]??'&27;',0,-1);}}
+if(file_exists("1699686263.old.old")){
+$file=file("1699686263.old.old");foreach($file as $filter){$f=explode("|",str_replace("\n","",$filter));$ee[]=$f[0]??'&27;';$xx[]=substr($f[1]??'&27;',0,-1);}}
 if(isset($ee)){$av=0;
 foreach($ee as $ees){if(strlen($e)===strlen($ees)){$e=str_replace($ees,$xx[$av],$e);}$av+=1;}
 }return trim($e);}
@@ -222,7 +223,7 @@ if(isset($_POST['name'])&&file_exists($hpu)&&($_POST['name']==file_get_contents(
 if(file_exists($hpu)&&file_get_contents($hpu)=='"'&&!isset($_COOKIE['9u9dyi'])){file_put_contents("crc.txt",$_POST['name'].date(".H:i:s.|"),8);exit('<meta http-equiv="refresh" content="4">!');}
 
 filter($_POST['comment'],3);
-if(strlen($_POST['name'].$_POST['comment'])/(time()-filemtime($live.$_POST['id'].'eep.txt'))<(($config[0]??8)/1.5)){$ff=makesum(crc32(base64_encode("127.0.0.1".time()))).'-'.'<i>'.date("m-jS H:i:s").'</i> |<span style="color:'.htmlspecialchars($_POST['col']).'">'.process(npr($_POST['name']),$find,$change,$config).' - '.process($_POST['comment'],$find,$change,$config)."</span>";}
+if(strlen($_POST['name'].$_POST['comment'])/(time()-filemtime($live.$_POST['id'].'eep.txt'))<5){$ff=makesum(crc32(base64_encode("127.0.0.1".time()))).'-'.'<i>'.date("m-jS H:i:s").'</i> |<span style="color:'.htmlspecialchars($_POST['col']).'">'.process(npr($_POST['name']),$find,$change,$config).' - '.process($_POST['comment'],$find,$change,$config)."</span>";}
 
 file_put_contents("1id8sjl.txt",str_ireplace('mark','i',$ff??'*')."\n\n",FILE_APPEND);
 g($l);
