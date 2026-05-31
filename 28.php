@@ -533,7 +533,7 @@ return str_replace('-</button>','-]</button>',str_replace('float:right','margin-
 $file=db("1id8sjl.txt");
 echo'<!DOCTYPE html><html>';$cfi=htmlspecialchars($_POST['col']??$_COOKIE['col']);
 #Prevents downtime from going unnoticed
-if(file_exists('torok.txt'){$ok=filemtime('torok.txt');
+if(file_exists('torok.txt')){$ok=filemtime('torok.txt');
 if(($ok+350)<time()){echo '<mark>'.(time()-($ok+350)).'s 🌰⏱!</mark>';}}
 #Advanced notifications
 $b=(($config[4]-1)*2)??80;#((int)$_REQUEST['m']*2)??24;#$b=abs(min($b,48));5/2=2.5;2;4;
