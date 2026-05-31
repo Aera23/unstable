@@ -1,4 +1,9 @@
 <?php
+
+if(empty($_COOKIE['temptime'])){$time=strval(time());
+session_id($time.'x'.crc32($time));}
+session_start();
+
 if(!isset($config)){$config=explode("|",file_get_contents("config.txt"));}
 $phrase=$config[2]??'Chat';
 $_POST['crc']=100+(($_COOKIE['crc']??0)%900);
