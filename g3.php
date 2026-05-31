@@ -1,7 +1,7 @@
 <?php
 if(empty($_COOKIE['temptime'])){$time=strval(time());
-session_id($time.'x'.crc32($time));}
-session_start();
+session_id($time.'x'.crc32($time));
+session_start();}
 
 /*if(($_GET['b']??'d')!='d'){
 echo '<mark>Unlicensed software. Activate at <a href="https://aera23.net/activate" target="_blank">https://aera23.net/activate</a></mark>';}*/
